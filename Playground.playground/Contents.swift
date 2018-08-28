@@ -137,7 +137,7 @@ func getGeneralInfo(completion:@escaping (ChainInfo?)->Void){
     }
 }
 
-func getBlockContents(block:String,info:(BlockInfo?)->Void){
+func getBlockContents(block:String,  completion: @escaping (BlockInfo?)->Void){
     let urlString = "\(API.PRODUCER_URL)/\(API.GET_BLOCK_ENDPOINT)"
     
     guard let url = URL(string:urlString ) else{
@@ -158,10 +158,8 @@ func getBlockContents(block:String,info:(BlockInfo?)->Void){
         let info = try! JSONDecoder().decode(BlockInfo.self, from: data)
         print("Block")
         print(info.block_num)
-//        getBlockContents(block: info.previous)
-        
+        completion(info)
     }
-    
 }
 
 
@@ -213,18 +211,57 @@ func operations(){
     }
 }
 
+var counter = 0
+var max = 20
+var array = [BlockInfo]()
+var pending = [String:Bool]()
+
+func download20(blockid:String){
+    print("Downloading 20 \n \n")
+    print(array.count)
+    print("\n \n")
+    
+    if array.count == max{
+
+        return
+    }
+    pending[blockid] = true
+    
+    getBlockContents(block:blockid) { (info) in
+            if let info = info{
+                //remove from pending
+                //add to array
+                //Call download 20
+                print("Downloaded \(info.block_num)")
+                array.append(info)
+                download20(blockid: info.previous)
+            }else{
+                //Don't call anything
+                print("Some Error")
+            }
+        }
+}
+
+getGeneralInfo { (info) in
+    if let info = info{
+        download20(blockid: "\(info.lastBlock)")
+    }
+ 
+}
+
 
 class BlockOperation:Operation{
     var blockInfo:BlockInfo?
     private let block_id:String
-    
+    var state:BlockState
     init(block_id:String) {
         self.block_id = block_id
+        self.state = .new
     }
     
     override func main(){
         getBlockContents(block: self.block_id) { (info) in
-            print("Executed")
+          
             if let info = info{
                 
             }else{

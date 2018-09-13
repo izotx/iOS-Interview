@@ -70,17 +70,23 @@ func quicksort(_ array:[Int] ,left:Int, right:Int) -> [Int]{
     }
     
     let pivot = array[(left + right) / 2]
-    let index = partition(result, left: left, right: right, pivot: pivot)
+    let r = partition(result, left: left, right: right, pivot: pivot)
+    let index = r.0
+    let a = r.1
+    
+    result = a
     result = quicksort(result, left: left, right: index - 1)
-    result quicksort(result, left: index + 1, right:right)
+    result = quicksort(result, left: index + 1, right:right)
 
     return result
 }
 
 
-func partition(_ array:[Int] ,left _left:Int, right _right:Int,pivot:Int) -> Int{
+func partition(_ array:[Int] ,left _left:Int, right _right:Int,pivot:Int) -> (Int, [Int]){
+    var result = array
     var left = _left
     var right = _right
+
     while left <= right {
         while(array[left] < pivot){
             left += 1
@@ -94,20 +100,26 @@ func partition(_ array:[Int] ,left _left:Int, right _right:Int,pivot:Int) -> Int
             //swap
             left += 1
             right += 1
-            swap()
+            result = swap(array,left,right)
         }
     }
-    
-    return left
+    return (left, result)
 }
 
-func swap(_ array:[Int], _ left:Int, _ right: Int){
-    
+func swap(_ _array:[Int], _ left:Int, _ right: Int)->[Int]{
+    var array = _array
+    let temp = array[right]
+    array[right] = array[left]
+    array[left] = temp
+    return array
 }
 
 
 var array = [9,3,5,1,7,1]
 //mergesort(array)
+
+quicksort(array, left: 0, right: array.count - 1)
+
 
 (array[0],array[1]) = (array[1],array[0])
 array

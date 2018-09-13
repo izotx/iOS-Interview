@@ -57,6 +57,59 @@ func merge(left:[Int],right:[Int])->[Int]{
     return array
 }
 
-let array = [9,3,5,1,7,1]
-mergesort(array)
+
+func quicksort(array:[Int]){
+    
+}
+
+func quicksort(_ array:[Int] ,left:Int, right:Int) -> [Int]{
+    var result = array
+    //Base Condition
+    if(left >= right){
+        return result
+    }
+    
+    let pivot = array[(left + right) / 2]
+    let index = partition(result, left: left, right: right, pivot: pivot)
+    result = quicksort(result, left: left, right: index - 1)
+    result quicksort(result, left: index + 1, right:right)
+
+    return result
+}
+
+
+func partition(_ array:[Int] ,left _left:Int, right _right:Int,pivot:Int) -> Int{
+    var left = _left
+    var right = _right
+    while left <= right {
+        while(array[left] < pivot){
+            left += 1
+        }
+        
+        while(array[right] > pivot){
+            right -= 1
+        }
+        
+        if(left <= right){
+            //swap
+            left += 1
+            right += 1
+            swap()
+        }
+    }
+    
+    return left
+}
+
+func swap(_ array:[Int], _ left:Int, _ right: Int){
+    
+}
+
+
+var array = [9,3,5,1,7,1]
+//mergesort(array)
+
+(array[0],array[1]) = (array[1],array[0])
+array
+
 

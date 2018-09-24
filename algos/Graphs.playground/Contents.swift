@@ -57,12 +57,12 @@ class Graph {
         let max = getMaxIndex()
         
         var adjacencyList = [[[Int]]]()
-        for a in 0..<max{
+        for _ in 0..<max{
             adjacencyList.append([])
         }
         
         for e in self.edges{
-            e
+            
             if let from = e.nodeFrom, let val = from.value
             {
                 if let v = e.nodeTo?.value, let ev = e.value {
@@ -82,6 +82,24 @@ class Graph {
     func getAdjacencyMatrix() -> [[Int]] {
         let max = getMaxIndex()
         var adjacencyMatrix = [[Int]]()
+
+        
+        //That creates an empty matrix of size of nodes/nodes
+        for _ in 0...max{
+            var list = [Int]()
+            for _ in 0...max{
+                list.append(0)
+            }
+            adjacencyMatrix.append(list)
+        }
+
+        
+        
+        for e in self.edges{
+            adjacencyMatrix[(e.nodeFrom?.value!)!][(e.nodeTo?.value!)!] = e.value!
+        }
+
+        
         
         return adjacencyMatrix
     }

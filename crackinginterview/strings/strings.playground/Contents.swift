@@ -79,6 +79,36 @@ func checkPermutations(_ str1:String, _ str2:String)->Bool{
     return true
 }
 
+func isPalindrome(_ str1:String, _ str2:String)->Bool{
+    return String(str1.reversed()) == str2
+}
+
+//Reverse String
+func reverse(str:String)->String{
+    var chars = [Character]()
+    for i in (0...str.count).reversed() {
+        print(i)
+       let index = str.index(str.startIndex, offsetBy: i)
+       chars.append(str[index])
+    }
+    return String(chars)
+}
+
+func isStringANumber(str:String)->Bool{
+    let numbers = [0,1,2,3,4,5,6,7,8,9]
+    let stringNumbers = numbers.map { (el) -> String in
+        return "\(el)"
+    }
+    
+    for char in str{
+        if !stringNumbers.contains(String(char)){
+            return false
+        }
+    }
+    return true
+}
+
+
 func testCases(){
 //test 1.1
 isUnique("sar")
@@ -87,6 +117,14 @@ isUnique("alib")
 isUniqueNoDataStructures("aas")
 isUniqueNoDataStructures("alib")
 
+//isPalindrome
+isPalindrome("lal1", "1lal")
+isPalindrome("lal12", "1lal2")
+    
+//isStringNumber
+isStringANumber(str: "a1")
+isStringANumber(str: "2323231")
+    
 //Permutations
 checkPermutations("ab", "ba")
 checkPermutations("ab1", "ba")

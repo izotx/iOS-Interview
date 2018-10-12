@@ -19,9 +19,6 @@ func reverseStringInPlace(s:inout String){
 }
 
 func reverseString(s:inout String){
-    var leftI = s.startIndex
-    var rightI = s.index(before: s.endIndex)
-    
     var newWordChars = [Character]()
     
     for char in s{

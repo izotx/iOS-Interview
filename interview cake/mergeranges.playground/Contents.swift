@@ -1,5 +1,6 @@
 import UIKit
 
+
 class Meeting: CustomStringConvertible {
     
     var startTime: Int
@@ -17,9 +18,31 @@ class Meeting: CustomStringConvertible {
     }
     
     /** Write a function mergeRanges() that takes an array of multiple meeting time ranges and returns an array of condensed ranges. */
-   
-    
 }
+
+// O(n) nlogn
+// O(1)
+func mergeRanges1(_ meetings: inout [Meeting])->[Meeting]{
+    
+    //sort
+    meetings.sort{ return $0.startTime < $1.startTime}
+    //now we have them sorted by start time let's iterate through and see what happpes
+    var sortedMeetings = [meetings[0]]
+    
+    for meeting in meetings{
+        let last =  sortedMeetings.last!
+        if meeting.startTime > last.endTime{
+            sortedMeetings.append(meeting)
+        }else{
+            last.endTime = last.endTime > meeting.endTime ? last.endTime : meeting.endTime
+        }
+    }
+
+    return sortedMeetings
+}
+
+
+
 func mergeRanges(_ meetings: [Meeting])->[Meeting]{
     
     //Do I have to sort it?
@@ -42,6 +65,7 @@ func mergeRanges(_ meetings: [Meeting])->[Meeting]{
                 end = m2.endTime > end ? m2.endTime : end
             }
         }
+        //removing duplicates
         if  (newMeetings.filter{ $0.startTime == start && $0.endTime == end}).count == 0{
             newMeetings.append(Meeting(startTime: start, endTime: end))
         }
@@ -50,25 +74,25 @@ func mergeRanges(_ meetings: [Meeting])->[Meeting]{
     return newMeetings
 }
 
-let m = [
-    Meeting(startTime: 0,  endTime: 1),
-    Meeting(startTime: 3,  endTime: 5),
-    Meeting(startTime: 4,  endTime: 8),
-    Meeting(startTime: 10, endTime: 12),
-    Meeting(startTime: 9,  endTime: 10)
-]
-
-//var mee = Meeting()
-
-let r1 = mergeRanges(m)
-print(r1)
-
-let m1 =   [
-    Meeting(startTime: 1, endTime: 10),
-    Meeting(startTime: 2, endTime: 6),
-    Meeting(startTime: 3, endTime: 5),
-    Meeting(startTime: 7, endTime: 9)
-]
-
-let r2 = mergeRanges(m1)
-print(r2)
+func testMergeRanges(){
+    var m = [
+        Meeting(startTime: 0,  endTime: 1),
+        Meeting(startTime: 3,  endTime: 5),
+        Meeting(startTime: 4,  endTime: 8),
+        Meeting(startTime: 10, endTime: 12),
+        Meeting(startTime: 9,  endTime: 10)
+    ]
+    
+    let r1 = mergeRanges(m)
+    print(r1)
+    
+    var m1 =   [
+        Meeting(startTime: 1, endTime: 10),
+        Meeting(startTime: 2, endTime: 6),
+        Meeting(startTime: 3, endTime: 5),
+        Meeting(startTime: 7, endTime: 9)
+    ]
+    
+    let r2 = mergeRanges1(&m)
+    print(r2)
+}

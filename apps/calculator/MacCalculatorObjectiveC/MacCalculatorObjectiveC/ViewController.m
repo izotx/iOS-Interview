@@ -7,16 +7,26 @@
 //
 
 #import "ViewController.h"
+#import "OperationResult.h"
+#import "SimpleCalculator.h"
+
+@interface ViewController()
+    @property SimpleCalculator* calculator;
+@end
 
 @implementation ViewController
 
 - (IBAction)buttonAction:(id)sender {
     NSLog(@" %@", [(NSButton *)sender title] );
+   [_calculator addExpression:[sender title]];
+    OperationResult * result =  _calculator.currentResult;
+    NSLog(@" %d", result.value);
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    _calculator = [SimpleCalculator new];
     // Do any additional setup after loading the view.
 }
 

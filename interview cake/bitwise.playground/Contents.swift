@@ -1,5 +1,6 @@
 import UIKit
 
+
 // Bitwise AND
 // The AND operation takes two bits and returns 1 if both bits are 1. Otherwise, it returns 0.
 0b11 & 0b10 // → 2
@@ -37,6 +38,6 @@ import UIKit
 
 //Bit shifts take number of times to shift as the right argument:
 //left shift divided by 2 to the power number of shifts, right shift divides by 2 to the power of number of shifts
-0b1010110 << 2  //→  1011000 =0 344 
+0b1010110 << 2  //→  1011000 =0 344
 0b1011010 >> 3  //→  0001011
 

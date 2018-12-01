@@ -1,5 +1,4 @@
 import UIKit
-
 //In Place
 func reverseStringInPlace(s:inout String){
     var leftI = s.startIndex
@@ -27,8 +26,6 @@ func reverseString(s:inout String){
     s = String(newWordChars)
 }
 
-
-
 var str = "Hello, playground"
-reverseString(s: &str)
+//reverseString(s: &str)
 reverseStringInPlace(s: &str)

@@ -20,6 +20,39 @@ class Meeting: CustomStringConvertible {
     /** Write a function mergeRanges() that takes an array of multiple meeting time ranges and returns an array of condensed ranges. */
 }
 
+struct Video{
+    var duration:Int
+}
+
+struct View{
+    var startTime:Int
+    var endTime:Int
+}
+func doublePercentageWatched(video:Video, views:[View]) -> Double{
+    var duration:Int = 0
+    if(views.count == 0){
+        return 0
+    }
+
+    var last = views.first!
+
+    for view in views{
+        
+        //Overlap
+        if view.startTime <= last.endTime{
+            duration += last.endTime - view.startTime
+        }//Don't Overlap
+        else{
+            duration += view.endTime - view.startTime
+        }
+        last = view
+    }
+    
+
+    return 0
+}
+
+
 // O(n) nlogn
 // O(1)
 func mergeRanges1(_ meetings: inout [Meeting])->[Meeting]{

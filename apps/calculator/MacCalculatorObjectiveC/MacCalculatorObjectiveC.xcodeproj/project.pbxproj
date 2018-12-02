@@ -19,6 +19,7 @@
 		4017C91921B0975400A237DF /* OperationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4017C91821B0975400A237DF /* OperationResult.m */; };
 		409397D321B0DAA3006F49A7 /* SimpleCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4017C91521B0886300A237DF /* SimpleCalculator.m */; };
 		409397D421B0DC3C006F49A7 /* OperationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4017C91821B0975400A237DF /* OperationResult.m */; };
+		B6651C6A21B43C7800E73FDF /* EnhancedCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6651C6921B43C7800E73FDF /* EnhancedCalculator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		4017C91521B0886300A237DF /* SimpleCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleCalculator.m; sourceTree = "<group>"; };
 		4017C91721B0975400A237DF /* OperationResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OperationResult.h; sourceTree = "<group>"; };
 		4017C91821B0975400A237DF /* OperationResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OperationResult.m; sourceTree = "<group>"; };
+		B6651C6821B43C5A00E73FDF /* EnhancedCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnhancedCalculator.h; sourceTree = "<group>"; };
+		B6651C6921B43C7800E73FDF /* EnhancedCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnhancedCalculator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				4017C91221B04C3900A237DF /* Calculator.m */,
 				4017C91421B0886300A237DF /* SimpleCalculator.h */,
 				4017C91521B0886300A237DF /* SimpleCalculator.m */,
+				B6651C6821B43C5A00E73FDF /* EnhancedCalculator.h */,
+				B6651C6921B43C7800E73FDF /* EnhancedCalculator.m */,
 				4017C91721B0975400A237DF /* OperationResult.h */,
 				4017C91821B0975400A237DF /* OperationResult.m */,
 				4017C8EC21B0487500A237DF /* Info.plist */,
@@ -278,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4017C91921B0975400A237DF /* OperationResult.m in Sources */,
+				B6651C6A21B43C7800E73FDF /* EnhancedCalculator.m in Sources */,
 				4017C8E621B0487500A237DF /* ViewController.m in Sources */,
 				4017C91321B04C3900A237DF /* Calculator.m in Sources */,
 				4017C91621B0886300A237DF /* SimpleCalculator.m in Sources */,

@@ -67,26 +67,6 @@
 }
 
 
--(NSString*)textToDisplay{
-    
-    int result = 0;
-   //
-    
-    //evaluate expression
-    NSArray * parsedNumbers = [self parseNumbers];
-    NSString * lastOperation = nil;
-    for (int i = 0; i < parsedNumbers.count - 2; i++){
-        if ([parsedNumbers[i] isKindOfClass:[NSNumber class]]){
-            if (lastOperation != nil) {
-                //result = result
-            }
-
-        }
-// 1 + 1 + -> 2
-    }
-
-    return @"";
-}
 
 //divide into operations
 //it should be number, operation, number

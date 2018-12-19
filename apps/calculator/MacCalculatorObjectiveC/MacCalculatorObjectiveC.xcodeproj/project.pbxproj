@@ -20,6 +20,8 @@
 		409397D321B0DAA3006F49A7 /* SimpleCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4017C91521B0886300A237DF /* SimpleCalculator.m */; };
 		409397D421B0DC3C006F49A7 /* OperationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4017C91821B0975400A237DF /* OperationResult.m */; };
 		B6651C6A21B43C7800E73FDF /* EnhancedCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6651C6921B43C7800E73FDF /* EnhancedCalculator.m */; };
+		B6651C7121B4410900E73FDF /* Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6651C7021B4410900E73FDF /* Addition.m */; };
+		B6651C7221B4410900E73FDF /* Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B6651C7021B4410900E73FDF /* Addition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,9 @@
 		4017C91821B0975400A237DF /* OperationResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OperationResult.m; sourceTree = "<group>"; };
 		B6651C6821B43C5A00E73FDF /* EnhancedCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnhancedCalculator.h; sourceTree = "<group>"; };
 		B6651C6921B43C7800E73FDF /* EnhancedCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnhancedCalculator.m; sourceTree = "<group>"; };
+		B6651C6B21B43DA100E73FDF /* MathCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathCommand.h; sourceTree = "<group>"; };
+		B6651C6F21B4410900E73FDF /* Addition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Addition.h; path = MacCalculatorObjectiveC/Addition.h; sourceTree = "<group>"; };
+		B6651C7021B4410900E73FDF /* Addition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Addition.m; path = MacCalculatorObjectiveC/Addition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +99,9 @@
 		4017C8D521B0487400A237DF = {
 			isa = PBXGroup;
 			children = (
+				B6651C6B21B43DA100E73FDF /* MathCommand.h */,
+				B6651C6F21B4410900E73FDF /* Addition.h */,
+				B6651C7021B4410900E73FDF /* Addition.m */,
 				4017C8E021B0487400A237DF /* MacCalculatorObjectiveC */,
 				4017C8F721B0487500A237DF /* MacCalculatorObjectiveCTests */,
 				4017C90221B0487500A237DF /* MacCalculatorObjectiveCUITests */,
@@ -283,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4017C91921B0975400A237DF /* OperationResult.m in Sources */,
+				B6651C7121B4410900E73FDF /* Addition.m in Sources */,
 				B6651C6A21B43C7800E73FDF /* EnhancedCalculator.m in Sources */,
 				4017C8E621B0487500A237DF /* ViewController.m in Sources */,
 				4017C91321B04C3900A237DF /* Calculator.m in Sources */,
@@ -297,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				409397D421B0DC3C006F49A7 /* OperationResult.m in Sources */,
+				B6651C7221B4410900E73FDF /* Addition.m in Sources */,
 				4017C8F921B0487500A237DF /* MacCalculatorObjectiveCTests.m in Sources */,
 				409397D321B0DAA3006F49A7 /* SimpleCalculator.m in Sources */,
 			);

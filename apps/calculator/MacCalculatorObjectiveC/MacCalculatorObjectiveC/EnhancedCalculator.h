@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class OperationResult;
 
-@interface SimpleCalculator : NSObject
+@interface EnhancedCalculator : NSObject
     -(void)addExpression:(NSString*)input;
     -(OperationResult*)evaluateCommand:(NSString *)command;
 -(OperationResult*)calculate:(NSString *)operation first:(NSString*)first andSecond:(NSString*)second;

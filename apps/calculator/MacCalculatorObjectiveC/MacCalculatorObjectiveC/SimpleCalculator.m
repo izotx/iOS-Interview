@@ -101,7 +101,7 @@
         
     }
 
-
+#pragma mark TODO REFACTOR THAT. Perhaps in the separate classes conforming to MathCommand Protocol?
 -(OperationResult*)calculate:(NSString *)operation first:(NSString*)first andSecond:(NSString*)second{
     int firstNumber = (first != nil)? first.intValue : 0;
     int secondNumber = (second != nil)? second.intValue : 0;

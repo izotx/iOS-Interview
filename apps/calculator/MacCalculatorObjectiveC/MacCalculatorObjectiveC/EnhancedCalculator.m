@@ -6,10 +6,12 @@
 //  Copyright © 2018 Janusz Chudzynski. All rights reserved.
 //
 
-#import "SimpleCalculator.h"
+#import "EnhancedCalculator.h"
 #import "OperationResult.h"
+#import "Addition.h"
+#import "MathCommand.h"
 
-@interface SimpleCalculator()
+@interface EnhancedCalculator()
     @property NSString * lastOperation;
     @property NSMutableString * firstNumber;
     @property NSMutableString * secondNumber;
@@ -17,19 +19,20 @@
     @property BOOL secondNumberCompleted;
 
 
-    @property NSMutableArray * operations;
+    @property NSArray * operands;
     @property NSArray * commands;
     @property NSArray * digits;
     @property NSString * displayText;
 
 @end
 
-@implementation SimpleCalculator
+@implementation EnhancedCalculator
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _commands = @[@"*",@"/",@"+",@"-",@"=",@"C"];
+        _commands = @[@"=",@"C"];
+        _operands = @[[Addition new]];
         NSMutableArray * tempDigits = [NSMutableArray new];
         _secondNumber = [NSMutableString new];
         _firstNumber = [NSMutableString new];
@@ -74,6 +77,16 @@
     }
 
 
+-(id <MathCommand>)findOperand:(NSString *)operandName{
+    for( id<MathCommand> operand in self.operands){
+        if ([operand.operatorName isEqualToString:operandName]){
+            return operand;
+        }
+    }
+    return nil;
+}
+
+
 
 
     -(OperationResult*)evaluateCommand:(NSString *)command{
@@ -87,7 +100,7 @@
 
            return [self calculate:self.lastOperation first:self.firstNumber andSecond:self.secondNumber];
         }
-        else{
+        else{//Special commands
             _lastOperation = command;
             _firstNumberCompleted = true;
             int val =  _secondNumber.length > 0 ? _secondNumber.intValue : _firstNumber.intValue;
@@ -98,13 +111,15 @@
             
             return result;
         }
-        
     }
 
 
 -(OperationResult*)calculate:(NSString *)operation first:(NSString*)first andSecond:(NSString*)second{
     int firstNumber = (first != nil)? first.intValue : 0;
     int secondNumber = (second != nil)? second.intValue : 0;
+    
+    ////
+    
     
     if ([operation isEqualToString:@"+"]){
         return [self addFirst:firstNumber secondNumber:secondNumber];
@@ -127,6 +142,7 @@
         return result;
     }
 }
+
 
 -(OperationResult *)addFirst:(int) first secondNumber:(int)second{
     OperationResult * result = [OperationResult new];

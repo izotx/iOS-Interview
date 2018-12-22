@@ -1,21 +1,42 @@
 //: A UIKit based Playground for presenting user interface
-  
+
+/**
+    Algorithm
+    Observe Changes to array
+    Visualize
+*/
+
 import UIKit
 import PlaygroundSupport
+class Theme{
+    static let selectedBackgroundColor:UIColor = .blue
+    static let unselectedBackgroundColor:UIColor  = .clear
+    static let selectedFontColor:UIColor = .white
+    static let unselectedFontColor:UIColor  = .black
+    
+}
+
+
 
 class Animation{
     let delay:TimeInterval
-    let dx:CGFloat
-    let dy:CGFloat
+    let dx:[CGFloat]
+    let dy:[CGFloat]
     let duration:TimeInterval
-    let view:UIView
+    let views:[UIView]
+    var colors:[UIColor]?
 
-    init(delay:TimeInterval, dx:CGFloat, dy:CGFloat, duration:TimeInterval, view:UIView) {
+    init(delay:TimeInterval, dx:[CGFloat], dy:[CGFloat], duration:TimeInterval, views:[UIView]) {
         self.delay = delay
         self.dx = dx
         self.dy = dy
         self.duration = duration
-        self.view = view
+        self.views = views
+    }
+    
+    convenience init(delay:TimeInterval, dx:[CGFloat], dy:[CGFloat], duration:TimeInterval, views:[UIView],colors:[UIColor]) {
+        self.init(delay: delay, dx: dx, dy: dy, duration: duration, views: views )
+        self.colors = colors
     }
 }
 
@@ -23,6 +44,9 @@ class Animation{
 
 class MyViewController : UIViewController {
     var visualizer:ArrayVisualizer<Int>!
+    var button:UIButton!
+    var button1:UIButton!
+    
     let a = [3,2,0,8,5,10,6]
     
     override func loadView() {
@@ -34,13 +58,48 @@ class MyViewController : UIViewController {
         self.view.addSubview(visualizer)
         visualizer.visualizeArray(a)
 
-        let button = UIButton()
+        button = UIButton()
         button.frame = CGRect(x: 150, y: 200, width: 25, height: 25)
+        button1 = UIButton()
+        button1.frame = CGRect(x: 150, y: 400, width: 25, height: 25)
+        
         self.view.addSubview(button)
+        self.view.addSubview(button1)
+
+        
         button.addTarget(self, action: #selector(buttonPressed), for: UIControl.Event.touchUpInside)
         button.setTitle("8", for: .normal)
+        button1.setTitle("1", for: .normal)
         button.backgroundColor = .blue
-
+        button.backgroundColor = .red
+    }
+    
+    override func viewDidLoad() {
+//        UIView.animate(withDuration: 4) {
+//            self.button.backgroundColor = UIColor.red
+//        }
+    
+//        UIView.animateKeyframes(withDuration: 5, delay: 0, options: .calculationModeLinear, animations: {
+//           let fr = self.button.frame
+//           let fr1  = self.button1.frame
+//            
+//            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/2.0, animations: {
+//                self.button.frame = .zero
+//                self.button.backgroundColor = .red
+//                self.button1.backgroundColor = .black
+//                self.button1.frame = fr
+//            })
+//            UIView.addKeyframe(withRelativeStartTime: 1/2.0, relativeDuration: 1/2.0, animations: {
+//                self.button.frame = fr
+//                self.button.backgroundColor = .blue
+//                self.button1.frame = fr1 
+//            })
+//            
+//            
+//        }) { (completed) in
+//            
+//        }
+    
     }
 
     
@@ -55,7 +114,8 @@ class MyViewController : UIViewController {
 //        visualizer.animateChanges()
         
         visualizer.resetAnimations()
-        visualizer.moveToIndex(8, 1)
+        visualizer.swapElements(3, 6, index1: 0, index2: 6 )
+        visualizer.swapElements(2, 10, index1: 1, index2: 5 )
         visualizer.animateChanges()
         
      }
@@ -63,11 +123,11 @@ class MyViewController : UIViewController {
 
 
 class ArrayElement:UILabel{
-    var selected:Bool = false{
-        didSet{
-            styleIt()
-        }
-    }
+//    var selected:Bool = false{
+//        didSet{
+//            styleIt()
+//        }
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,20 +143,17 @@ class ArrayElement:UILabel{
         self.layer.borderWidth = 1.0
         self.textAlignment = .center
 
-        if(selected){
-            self.backgroundColor = UIColor.blue
-            self.alpha = 0.8
-            self.textColor = .white
-        }
-        else{
-            self.backgroundColor = UIColor.clear
-            self.alpha = 1
-            self.textColor = .black
-        }
-
+//        if(selected){
+//            self.backgroundColor = UIColor.blue
+//            self.alpha = 0.8
+//            self.textColor = .white
+//        }
+//        else{
+//            self.backgroundColor = UIColor.clear
+//            self.alpha = 1
+//            self.textColor = .black
+//        }
     }
-    
-
 }
 
 class ArrayVisualizer<Value:Comparable>:UIView{
@@ -131,6 +188,29 @@ class ArrayVisualizer<Value:Comparable>:UIView{
     }
     
     
+    func swapElements(_ value1:Int, _ value2:Int, index1:Int, index2:Int){
+        
+        //move elements down
+        guard let element1 = getElement(value1), let element2 = getElement(value2) else{
+            return
+        }
+        
+        //select
+        selectElements([element1,element2], [true,true])
+        //move down
+        moveVertically([element1,element2], false)
+        moveHorizontally([element1,element2], [(index2 - index1),(index1 - index2)])
+        moveVertically([element1,element2], true)
+        
+        //make sure that internal model is in check
+        self.arrayElements.swapAt(index1, index2)
+        
+        //Deselect
+        selectElements([element1,element2], [false,false])
+        
+        
+    }
+    
     func moveToIndex(_ value:Int, _ currentIndex:Int, _ targetIndex:Int){
         
         guard let element = getElement(value) else{
@@ -138,33 +218,33 @@ class ArrayVisualizer<Value:Comparable>:UIView{
         }
         
         //select
-        selectElement(element: element)
+        selectElements([element],[true])
         //move down
-        moveVertically(element, false)
+        moveVertically([element], false)
         //move horizontally
         
-        moveHorizontally(element, targetIndex - currentIndex)
+        moveHorizontally([element], [targetIndex - currentIndex])
 //        //move elements to make space
 //        //check if we are moving right or left
         if targetIndex > currentIndex{ //Shift elements to the left
             for i in currentIndex + 1 ... targetIndex{
                 let el = self.arrayElements[i]
-                moveHorizontally(el, -1)
+                moveHorizontally([el], [-1])
             }
         }
         else{
             for i in targetIndex ..< currentIndex{
                 let el = self.arrayElements[i]
                 print(el.text)
-                moveHorizontally(el, 1)
+                moveHorizontally([el], [1])
             }
         }
 
         //move up
-        moveVertically(element, true)
+        moveVertically([element], true)
 
         //Deselect
-        selectElement(element: element)
+        selectElements([element],[true])
         
         //remove and insert (cleanup internal data model)
         let r = arrayElements.remove(at: currentIndex)
@@ -205,14 +285,30 @@ class ArrayVisualizer<Value:Comparable>:UIView{
     }
     
     
-    func selectElement(element:ArrayElement){
-        element.selected = !element.selected
+
+    func selectElements(_ elements:[ArrayElement], _ selected:[Bool]){
+        
+        var colors = [UIColor]()
+    
+        for (index,element) in elements.enumerated(){
+            if selected[index]{
+                colors.append(Theme.selectedBackgroundColor)
+            }
+            else{
+                colors.append(Theme.unselectedBackgroundColor)
+            }
+        }
+        
+        var offset = Array(repeating: CGFloat(0), count: elements.count)
+        
+        animations.append(Animation(delay: 0, dx: offset, dy: offset, duration: 1, views: elements, colors: colors))
+        
     }
     
     func selectElement(_ value:Value){
         
         self.arrayElements.map { (arrayElement) -> ArrayElement in
-            arrayElement.selected = false
+//            arrayElement.selected = false
             return arrayElement
         }
         
@@ -220,20 +316,38 @@ class ArrayVisualizer<Value:Comparable>:UIView{
             return arrayElement.text == "\(value)"
         }
         
-        if let element = list.first{
-            element.selected = !element.selected
-          
-        }
+//        if let element = list.first{
+////            element.selected = !element.selected
+//
+//        }
     }
     
 
-    func moveVertically(_ element:ArrayElement, _ up:Bool){
-        let offsetY =  up ? -element.frame.height : element.frame.height
-        animations.append(Animation(delay: 0, dx: 0, dy: offsetY, duration: 1, view: element))
+    func moveVertically(_ elements:[ArrayElement], _ up:Bool){
+
+        var dx = [CGFloat]()
+        var dy = [CGFloat]()
+        
+        
+        for element in elements{
+            let offsetY =  up ? -element.frame.height : element.frame.height
+            dy.append(offsetY)
+            dx.append(0)
+        }
+        
+        animations.append(Animation(delay: 0, dx: dx, dy: dy, duration: 1, views: elements))
     }
 
-    func moveHorizontally(_ element:ArrayElement, _ index:Int ) -> Void{
-        animations.append(Animation(delay: 0, dx: CGFloat(index) * element.frame.width, dy: 0, duration: 1, view: element))
+    func moveHorizontally(_ elements:[ArrayElement], _ offset:[Int] ) -> Void{
+        var dx = [CGFloat]()
+        var dy = [CGFloat]()
+        
+        for (index,element) in elements.enumerated(){
+            dy.append(0)
+            dx.append(CGFloat(offset[index]) * element.frame.width)
+        }
+        
+        animations.append(Animation(delay: 0, dx: dx, dy: dy, duration: 1, views: elements))
     }
     
 
@@ -252,11 +366,29 @@ class ArrayVisualizer<Value:Comparable>:UIView{
                 
                 let relativeDuration = animation.duration / totalDuration
                 let elapsedTime = currentTime / totalDuration
+               
+                
                 UIView.addKeyframe(withRelativeStartTime: elapsedTime , relativeDuration: relativeDuration, animations: {
                     print("Relative Duration: \(relativeDuration)")
                     print("Current Time: \(currentTime)")
-                  animation.view.frame = animation.view.frame.offsetBy(dx: animation.dx, dy: animation.dy)
-
+                    for (index, view) in animation.views.enumerated(){
+                       view.frame = view.frame.offsetBy(dx: animation.dx[index], dy: animation.dy[index])
+                    
+                        if let colors = animation.colors{
+                            print("a")
+                            if let v = view as? ArrayElement{
+                              if colors[index] == Theme.selectedBackgroundColor
+                              {
+                                v.backgroundColor = Theme.selectedBackgroundColor
+                                v.textColor = Theme.selectedFontColor
+                              }
+                              else{
+                                v.backgroundColor = Theme.unselectedBackgroundColor
+                                v.textColor = Theme.unselectedFontColor
+                                }
+                            }
+                        }
+                    }
                 })
                 currentTime = currentTime + animation.duration
             }
